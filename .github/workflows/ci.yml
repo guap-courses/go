@@ -1,0 +1,37 @@
+name: Go
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: download dependencies
+        run: |
+          go mod download
+
+      - name: Lint
+        uses: golangci/golangci-lint-action@v4
+        with:
+          version: latest
+
+      - name: Test
+        run: |
+          go test -v -race -coverprofile=./cover.out -covermode=atomic -coverpkg=$(go list ./... | grep -vE '(test|scripts|cmd|mock|gen)' | tr '\n' ',') ./...
+
+      - name: Check coverage
+        uses: vladopajic/go-test-coverage@v2
+        with:
+          profile: cover.out
+#          threshold-total: 80
