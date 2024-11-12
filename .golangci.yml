@@ -1,26 +1,15 @@
 linters:
   disable-all: true
   enable:
-    # - deadcode
+    # - dupl - it's very slow, enable if you really know why you need it
     - errcheck
-    - staticcheck
-    - structcheck
-    - typecheck
-    - unused
-    - varcheck
-    # - misspell
-    - nolintlint
+    - goconst
     - goimports
-    - nakedret
-    - unconvert
-    - whitespace
-    - gosimple
+    - gosec
     - govet
     - ineffassign
-    - gocritic
+    - megacheck # (staticcheck + gosimple + unused in one linter)
     - revive
-linters-settings:
-  nolintlint:
-    allow-unused: false
-    allow-leading-space: false
-    require-specific: true
+    - typecheck
+    - paralleltest
+    - unused # will be used insted of varcheck + deadcode + structcheck. More info https://github.com/golangci/golangci-lint/issues/1841
