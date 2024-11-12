@@ -1,13 +1,70 @@
-name: runLinters
-on: [push, pull_request]
+name: Go
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
 
 jobs:
-  golangci:
-    name: golangci
+  test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v2
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: download dependencies
+        run: |
+          go mod download
+
+      - name: Lint
+        uses: golangci/golangci-lint-action@v4
         with:
           version: latest
+
+      - name: Test
+        run: |
+          go test -v -race -coverprofile=./cover.out -covermode=atomic -coverpkg=$(go list ./... | grep -vE '(test|scripts|cmd|mock|gen)' | tr '\n' ',') ./...
+
+      - name: Check coverage
+        uses: vladopajic/go-test-coverage@v2
+        with:
+          profile: cover.out
+          threshold-total: 80
+  build:
+
+    # UP local docker registry service
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
+
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: network=host
+
+      # build and Push docker image to local registry
+      - name: Build and push to local registry
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: localhost:5000/name/home_controller:latest
+
+      - name: Inspect
+        run: |
+          docker buildx imagetools inspect localhost:5000/name/home_controller:latest
