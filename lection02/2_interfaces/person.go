@@ -9,19 +9,6 @@ type Person struct {
 	password string // приватное поле
 }
 
-func NewPerson(name string, age int, city string, password string) *Person {
-	if age < 0 {
-		println("age must be greater than zero")
-	}
-
-	return &Person{
-		Name:     name,
-		Age:      age,
-		City:     city,
-		password: password,
-	}
-}
-
 func (p Person) PrintName() {
 	fmt.Println("Name", p.Name)
 }

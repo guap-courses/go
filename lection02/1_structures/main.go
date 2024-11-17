@@ -9,15 +9,11 @@ func main() {
 
 	//initialization()
 
-	//sizeOf()
+	//emptyStruct()
 
-	embedding()
+	//embedding()
 
 	//set()
-	//
-	//compare()
-	//
-	//sizeOf()
 	//
 	//methods()
 	//
@@ -36,15 +32,6 @@ type Person struct {
 	Age      int
 	City     string
 	password string // приватное поле
-}
-
-type Person2 struct {
-	Name string
-	Age  int
-}
-
-func (p Person2) PrintName() {
-	fmt.Println("Name", p.Name)
 }
 
 func NewPerson(name string, age int, city string, password string) *Person {
@@ -87,7 +74,7 @@ func initialization() {
 	fmt.Println(a)
 }
 
-func sizeOf() {
+func emptyStruct() {
 
 	var _ struct{}
 
@@ -104,7 +91,6 @@ func sizeOf() {
 
 type PersonWithBirthday struct {
 	Person
-	Person2
 
 	Birthday time.Time
 }
@@ -116,7 +102,6 @@ func embedding() {
 		Birthday: time.Now(),
 	}
 
-	person.Person2.PrintName()
 	person.Person.PrintName()
 
 	person.SetPassword("123456")

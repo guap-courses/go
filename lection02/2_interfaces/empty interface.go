@@ -9,7 +9,6 @@ func printValue(v interface{}) {
 }
 
 func emptyInterface() {
-
 	printValue(42)      // передаем int
 	printValue("Hello") // передаем string
 	printValue(3.14)    // передаем float64
@@ -44,6 +43,8 @@ func typeAssertion() {
 }
 
 func main() {
+
+	emptyInterface()
 
 	typeAssertion()
 }

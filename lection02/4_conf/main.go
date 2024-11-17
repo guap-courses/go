@@ -86,7 +86,7 @@ func filesOpen() {
 
 func filesCreate() {
 
-	f, _ := os.Create("file.txt") // create or truncate
+	f, _ := os.Create("lection02/4_conf/file.txt") // create or truncate
 	defer f.Close()
 
 	_, _ = f.WriteString("Текст, который нужно записать\n")

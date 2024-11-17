@@ -6,6 +6,12 @@ import (
 	"time"
 )
 
+type config struct {
+	Name   string
+	Active bool
+	Age    uint
+}
+
 func main() {
 
 	//fileJson()

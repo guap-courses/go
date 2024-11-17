@@ -26,7 +26,6 @@ func errorHandling() {
 type custError struct {
 	ErrorCode int
 	ErrorMsg  string
-	ErrorMsg2 string
 }
 
 func (e custError) Error() string {
@@ -63,5 +62,5 @@ func errAsIs() {
 func main() {
 	//errorHandling()
 
-	errAsIs()
+	//errAsIs()
 }

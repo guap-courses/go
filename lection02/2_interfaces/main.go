@@ -38,18 +38,18 @@ func NewService(repository PersonRepository) Service {
 	}
 }
 
-//func main() {
-//
-//	dbRepo := DatabaseRepository{}
-//	_ = NewService(dbRepo)
-//
-//	cacheRepo := CacheRepository{}
-//	_ = NewService(cacheRepo)
-//
-//	mockRepo := MockRepository{}
-//	_ = NewService(mockRepo)
-//
-//}
+func main() {
+
+	dbRepo := DatabaseRepository{}
+	_ = NewService(dbRepo)
+
+	cacheRepo := CacheRepository{}
+	_ = NewService(cacheRepo)
+
+	mockRepo := MockRepository{}
+	_ = NewService(mockRepo)
+
+}
 
 func compose() {
 	var (
